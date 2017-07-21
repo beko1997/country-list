@@ -70,7 +70,7 @@ class CountryList {
 	 * @param string $countryCode  The country
 	 * @param string $locale       The locale (default: en)
 	 * @return string
-	 * @throws LanguageNotFoundException  If the country code doesn't match any country.
+	 * @throws CountryNotFoundException  If the country code doesn't match any country.
 	 */
 	public function getOne($countryCode, $locale = 'en')
 	{
