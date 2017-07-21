@@ -1,4 +1,4 @@
-<?php namespace Monarobase\CountryList;
+<?php namespace Monarobase\LanguageList;
 
 /*
  * This file is part of Monarobase-CountryList
@@ -11,22 +11,22 @@
  *
  *
  * @category    Monarobase
- * @package     CountryList
+ * @package     LanguageList
  * @copyright   (c) 2013-2015 Monarobase <jonathan@monarobase.net>
  * @link        https://monarobase.net
  */
 
 
 /**
- * CountryList
+ * LanguageList
  *
- * @author Monarobase <jonathan@monarobase.net>
+ * @author Bert
  */
-class CountryList {
+class LanguageList {
 
 	/**
 	 * @var string
-	 * Path to the directory containing countries data.
+	 * Path to the directory containing languages data.
 	 */
 	protected $dataDir;
 
@@ -39,25 +39,25 @@ class CountryList {
 	/**
 	 * Constructor.
 	 *
-	 * @param string|null $dataDir  Path to the directory containing countries data
+	 * @param string|null $dataDir  Path to the directory containing languages data
 	 */
 	public function __construct($dataDir = null)
 	{
 		if (!isset($dataDir))
 		{
-			$dataDir = base_path('vendor/umpirsky/country-list/data');
+			$dataDir = base_path('vendor/umpirsky/language-list/data');
 		}
 
 		if (!is_dir($dataDir))
 		{
-			throw new \RuntimeException(sprintf('Unable to locate the country data directory at "%s"', $dataDir));
+			throw new \RuntimeException(sprintf('Unable to locate the language data directory at "%s"', $dataDir));
 		}
 
 		$this->dataDir = realpath($dataDir);
 	}
 
 	/**
-	 * @return string  The country data directory.
+	 * @return string  The language data directory.
 	 */
 	public function getDataDir()
 	{
@@ -65,28 +65,28 @@ class CountryList {
 	}
 
 	/**
-	 * Returns one country.
+	 * Returns one language.
 	 *
-	 * @param string $countryCode  The country
+	 * @param string $languageCode  The language
 	 * @param string $locale       The locale (default: en)
 	 * @return string
-	 * @throws LanguageNotFoundException  If the country code doesn't match any country.
+	 * @throws LanguageNotFoundException  If the language code doesn't match any language.
 	 */
-	public function getOne($countryCode, $locale = 'en')
+	public function getOne($languageCode, $locale = 'en')
 	{
-		$countryCode = mb_strtoupper($countryCode);
+        $languageCode = mb_strtoupper($languageCode);
 		$locales = $this->loadData($locale, 'php');
 
-		if (!$this->has($countryCode, $locale))
+		if (!$this->has($languageCode, $locale))
 		{
-			throw new CountryNotFoundException($countryCode);
+			throw new LanguageNotFoundException($languageCode);
 		}
 
-		return $locales[mb_strtoupper($countryCode)];
+		return $locales[mb_strtoupper($languageCode)];
 	}
 
 	/**
-	 * Returns a list of countries.
+	 * Returns a list of languages.
 	 *
 	 * @param string $locale  The locale (default: en)
 	 * @param string $format  The format (default: php)
@@ -99,8 +99,8 @@ class CountryList {
 
 	/**
 	 * @param string $locale  The locale
-	 * @param array $data     An array (list) with country data
-	 * @return CountryList    The instance of CountryList to enable fluent interface
+	 * @param array $data     An array (list) with language data
+	 * @return LanguageList    The instance of LanguageList to enable fluent interface
 	 */
 	public function setList($locale, array $data)
 	{
@@ -114,7 +114,7 @@ class CountryList {
 	 *
 	 * @param string $locale  The locale
 	 * @param string $format  The format (default: php)
-	 * @return array          An array (list) with country
+	 * @return array          An array (list) with language
 	 */
 	protected function loadData($locale, $format)
 	{
@@ -123,11 +123,11 @@ class CountryList {
 		if (!isset($this->dataCache[$locale][$format]))
 		{
 			// Customization - "source" does not matter anymore because umpirsky refactored his library.
-			$file = sprintf('%s/%s/country.%s', $this->dataDir, $locale, $format);
+			$file = sprintf('%s/%s/language.%s', $this->dataDir, $locale, $format);
 
 			if (!is_file($file))
 			{
-				throw new \RuntimeException(sprintf('Unable to load the country data file "%s"', $file));
+				throw new \RuntimeException(sprintf('Unable to load the language data file "%s"', $file));
 			}
 
 			$this->dataCache[$locale][$format] = ($format == 'php') ? require $file : file_get_contents($file);
@@ -164,17 +164,17 @@ class CountryList {
 	}
 
 	/**
-	 * Indicates whether or not a given $countryCode matches a country.
+	 * Indicates whether or not a given $languageCode matches a language.
 	 * 
-	 * @param string $countryCode  A 2-letter country code
+	 * @param string $languageCode  A 2-letter language code
 	 * @param string $locale       The locale (default: en)
 	 * @return bool                <code>true</code> if a match was found, <code>false</code> otherwise
 	 */
-	public function has($countryCode, $locale = 'en')
+	public function has($languageCode, $locale = 'en')
 	{
 		$locales = $this->loadData($locale, 'php');
 
-		return isset($locales[mb_strtoupper($countryCode)]);
+		return isset($locales[mb_strtoupper($languageCode)]);
 	}
 }
 

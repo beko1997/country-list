@@ -23,7 +23,7 @@ use Illuminate\Support\ServiceProvider;
  *
  * @author Monarobase <jonathan@monarobase.net>
  */
-class CountryListServiceProvider extends ServiceProvider
+class LanguageListServiceProvider extends ServiceProvider
 {
 
     /**
