@@ -1,4 +1,4 @@
-<?php namespace Monarobase\CountryList;
+<?php namespace Monarobase\LanguageList;
 
 /**
  * CountryNotFoundException.php

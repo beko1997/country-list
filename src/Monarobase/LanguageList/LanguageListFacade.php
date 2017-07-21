@@ -14,7 +14,7 @@
  * @link        http://monarobase.net
  */
 
-namespace Monarobase\CountryList;
+namespace Monarobase\LanguageList;
 
 use Illuminate\Support\Facades\Facade;
 
